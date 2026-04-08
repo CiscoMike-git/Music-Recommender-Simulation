@@ -17,17 +17,7 @@ Replace this paragraph with your own summary of what your version does.
 
 ## How The System Works
 
-Explain your design in plain language.
-
-Some prompts to answer:
-
-- What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
-- What information does your `UserProfile` store
-- How does your `Recommender` compute a score for each song
-- How do you choose which songs to recommend
-
-You can include a simple diagram or bullet list if helpful.
+There are two primary methods utilziied for recommending music in applications like Spotify and Youtube Music, collaborative and content-based filtering. Collaborative filtering entails finding patterns between the habits of other users to yield song suggestions that will likely be enjoyed by the select user. On the other hand, content-based filtering compares the audio and metadata of songs to makes its suggestions, relying on the user's prior data to predict potential propiquity with a select song. Typically, these two methods are utilized in tandem, to varying degrees, for these large scale platforms. However, in this simulation, where a wide breadth of user data deos not already exist, content-based filtering based on a user taste profile is solely prioritized. In this system, each song is represented by numeric features like energy, acousticness, valence, and danceability in adiition to qualitative metrics like genre and mood. Addditionally, the user taste profile is self-reported across four factors, favorite genre and mood, the target energy, and whether the user likes acoustic music. The system will score each song by comparing its metadate to the user taste profile. First, it checks whether the song's genre matches the user's favorite genre — if it does, it adds the most points, since genre is the strongest signal of taste. Second, it checks for a mood match and adds slightly fewer points for that. Third, it looks at how close the song's energy level is to the user's target energy — a perfect match adds a full point, and the score shrinks as the gap grows. Finally, it factors in whether the user likes acoustic music, rewarding songs that are more acoustic for listeners who do, and less acoustic for those who don't. Each song gets a total score from these four checks, and the top-scoring songs are returned as recommendations.
 
 ---
 
