@@ -19,7 +19,26 @@ Replace this paragraph with your own summary of what your version does.
 
 There are two primary methods utilized for recommending music in applications like Spotify and Youtube Music, collaborative and content-based filtering. Collaborative filtering entails finding patterns between the preference histories of other users to yield song suggestions that will likely be enjoyed by the select user. On the other hand, content-based filtering compares the audio and metadata of songs to makes its suggestions, relying on the user's prior data or denoted preferences to predict potential propinquity with a select song. Typically, these two methods are utilized in tandem, to varying degrees, for these large scale platforms. However, in this simulation, where a wide breadth of user data does not already exist, content-based filtering based on a user taste profile is solely prioritized. In this system, each song is represented by numeric features like energy, acousticness, valence, and danceability in addition to qualitative metrics like genre and mood. Additionally, the user taste profile is self-reported across four factors, favorite genre and mood, the target energy, and whether the user likes acoustic music. The system will score each song by comparing its metadata to the user taste profile. First, it checks whether the song's genre matches the user's favorite genre — if it does, it adds the most points, since genre is the strongest signal of taste. Second, it checks for a mood match and adds slightly fewer points for that. Third, it looks at how close the song's energy level is to the user's target energy — a perfect match adds a full point, and the score shrinks as the gap grows. Finally, it factors in whether the user likes acoustic music, rewarding songs that are more acoustic for listeners who do, and less acoustic for those who don't. Each song gets a total score from these four checks, and the top-scoring songs are returned as recommendations.
 
-![Music recommender system output showing top 5 song recommendations ranked by score. Results display song titles, artists, numerical scores, and reasoning including genre matches, mood alignment, energy proximity to user target, and acoustic music preference. Top recommendation is Sunrise City by Neon Echo with score 4.66. The interface presents technical matching criteria in a clear, formatted list structure.](Images/Top%20Recommendations.png)
+---
+
+## Screenshots:
+
+### Initial User Profile Screenshot:
+![Music recommender system output showing top 5 song recommendations ranked by score. Results display song titles, artists, numerical scores, and reasoning including genre matches, mood alignment, energy proximity to user target, and acoustic music preference. Top recommendation is Sunrise City by Neon Echo with score 4.66. The interface presents technical matching criteria in a clear, formatted list structure.](Images\Initial%20Profile%20Output.png)
+
+### Updated User Profiles Screenshots:
+
+Typical User Profile:
+![Music recommender system output for a typical user profile showing top song recommendations ranked by score with genre, mood, energy, and acoustic preference matching criteria.](Images/Typical%20User%20Profile%20Output.png)
+
+Niche Listener Profile:
+![Music recommender system output for a niche listener profile showing top song recommendations ranked by score with genre, mood, energy, and acoustic preference matching criteria.](Images/Niche%20Listener%20Profile%20Output.png)
+
+Max Energy & Anti-Acoustic Profile:
+![Music recommender system output for a maximum energy and anti-acoustic user profile showing top song recommendations ranked by score with genre, mood, energy, and acoustic preference matching criteria.](Images/Max%20Energy%20%26%20Anti%20Acoustic%20Profile%20Output.png)
+
+Min Energy & Full Acoustic Profile:
+![Music recommender system output for a minimum energy and fully acoustic user profile showing top song recommendations ranked by score with genre, mood, energy, and acoustic preference matching criteria.](Images/Min%20Energy%20%26%20Full%20Acoustic%20Profile%20Output.png)
 
 ---
 
