@@ -63,11 +63,57 @@ def load_songs(csv_path: str) -> List[Dict]:
     print(f"Loaded songs: {len(songs)}")
     return songs
 
+def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
+    """
+    Scores a single song against a user preference dict.
+
+    user_prefs keys: favorite_genre, favorite_mood, target_energy, likes_acoustic
+    Returns (total_score, reasons) where reasons is a list of human-readable strings.
+    """
+    score = 0.0
+    reasons = []
+
+    if song["genre"] == user_prefs["favorite_genre"]:
+        score += 2.0
+        reasons.append(f"Genre matches your favorite ({song['genre']}) +2.0")
+    else:
+        reasons.append(f"Genre '{song['genre']}' doesn't match your favorite '{user_prefs['favorite_genre']}' +0.0")
+
+    if song["mood"] == user_prefs["favorite_mood"]:
+        score += 1.5
+        reasons.append(f"Mood matches your favorite ({song['mood']}) +1.5")
+    else:
+        reasons.append(f"Mood '{song['mood']}' doesn't match your favorite '{user_prefs['favorite_mood']}' +0.0")
+
+    energy_proximity = 1.0 - abs(song["energy"] - user_prefs["target_energy"])
+    score += energy_proximity
+    reasons.append(
+        f"Energy {song['energy']:.2f} vs your target {user_prefs['target_energy']:.2f} "
+        f"→ proximity +{energy_proximity:.2f}"
+    )
+
+    if user_prefs["likes_acoustic"]:
+        score += song["acousticness"]
+        reasons.append(f"You like acoustic music; acousticness {song['acousticness']:.2f} +{song['acousticness']:.2f}")
+    else:
+        non_acoustic_score = 1.0 - song["acousticness"]
+        score += non_acoustic_score
+        reasons.append(
+            f"You prefer non-acoustic; acousticness {song['acousticness']:.2f} "
+            f"→ +{non_acoustic_score:.2f}"
+        )
+
+    return score, reasons
+
+
 def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5) -> List[Tuple[Dict, float, str]]:
     """
     Functional implementation of the recommendation logic.
     Required by src/main.py
     """
-    # TODO: Implement scoring and ranking logic
-    # Expected return format: (song_dict, score, explanation)
-    return []
+    scored = [
+        (song, total_score, " | ".join(reasons))
+        for song in songs
+        for total_score, reasons in [score_song(user_prefs, song)]
+    ]
+    return sorted(scored, key=lambda x: x[1], reverse=True)[:k]
